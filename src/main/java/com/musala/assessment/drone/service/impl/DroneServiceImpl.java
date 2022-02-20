@@ -14,6 +14,8 @@ import com.musala.assessment.drone.service.MedicationService;
 import com.musala.assessment.drone.util.ValidatorUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -85,6 +87,11 @@ public class DroneServiceImpl implements DroneService {
         BeanUtils.copyProperties(drone, response);
         response.setCurrentWeight(formatCurrentWeight(drone.getCurrentWeight()));
         return response;
+    }
+
+    @Override
+    public Page<Drone> findAll(Pageable pageRequest) {
+        return droneRepository.findAll(pageRequest);
     }
 
     private LoadDroneResponse buildResponse(Medication medicationItem) {
