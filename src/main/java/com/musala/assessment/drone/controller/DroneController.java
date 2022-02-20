@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/drone")
 @RequiredArgsConstructor
@@ -32,5 +34,10 @@ public class DroneController {
     @GetMapping("/get-all-medication-items")
     public DroneMedicationItemsResponse getAllDroneMedicationItems(@RequestParam String serialNumber){
         return medicationService.getAllDroneMedicationItems(serialNumber);
+    }
+
+    @GetMapping("/get-all-available-drones")
+    public List<DroneResponse> getAllAvailableDrones(){
+        return droneService.getAllAvailableDronesForLoading();
     }
 }

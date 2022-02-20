@@ -18,6 +18,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -57,6 +61,22 @@ public class DroneServiceImpl implements DroneService {
         return buildResponse(medicationItem);
     }
 
+    @Override
+    public List<DroneResponse> getAllAvailableDronesForLoading() {
+        List<Drone> drones = droneRepository.findAllByStateIn(Arrays.asList(State.IDLE, State.LOADING));
+
+        Function<Drone, DroneResponse> getAvailableDrones = (drone) -> DroneResponse.builder()
+                .serialNumber(drone.getSerialNumber())
+                .model(drone.getModel())
+                .batteryCapacity(drone.getBatteryCapacity())
+                .weightLimit(drone.getWeightLimit())
+                .currentWeight(formatCurrentWeight(drone.getCurrentWeight()))
+                .state(drone.getState())
+                .build();
+
+        return drones.stream().map(getAvailableDrones).collect(Collectors.toList());
+    }
+
     private LoadDroneResponse buildResponse(Medication medicationItem) {
         return LoadDroneResponse.builder()
                 .name(medicationItem.getName())
@@ -89,4 +109,9 @@ public class DroneServiceImpl implements DroneService {
         }
         return droneRepository.save(drone);
     }
+
+    private double formatCurrentWeight(double currentWeight){
+        return Math.round(currentWeight * 100.0) / 100.0;
+    }
+
 }
