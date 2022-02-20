@@ -13,4 +13,6 @@ public interface DroneService {
     LoadDroneResponse loadDroneWithMedicationItem(LoadDroneRequest loadDroneRequest);
 
     List<DroneResponse> getAllAvailableDronesForLoading();
+
+    DroneResponse getDroneBySerialNumber(String serialNumber);
 }

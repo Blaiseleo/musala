@@ -40,4 +40,9 @@ public class DroneController {
     public List<DroneResponse> getAllAvailableDrones(){
         return droneService.getAllAvailableDronesForLoading();
     }
+
+    @GetMapping("/get-drone-battery-level")
+    public DroneResponse getDroneBatteryLevel(@RequestParam String serialNumber){
+        return droneService.getDroneBySerialNumber(serialNumber);
+    }
 }

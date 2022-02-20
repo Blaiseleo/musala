@@ -77,6 +77,16 @@ public class DroneServiceImpl implements DroneService {
         return drones.stream().map(getAvailableDrones).collect(Collectors.toList());
     }
 
+    @Override
+    public DroneResponse getDroneBySerialNumber(String serialNumber) {
+        Drone drone = droneRepository.findBySerialNumber(serialNumber).orElseThrow(() ->
+                new NotFoundException(String.format("Drone with serial number %s not found", serialNumber)));
+        DroneResponse response = new DroneResponse();
+        BeanUtils.copyProperties(drone, response);
+        response.setCurrentWeight(formatCurrentWeight(drone.getCurrentWeight()));
+        return response;
+    }
+
     private LoadDroneResponse buildResponse(Medication medicationItem) {
         return LoadDroneResponse.builder()
                 .name(medicationItem.getName())
