@@ -7,7 +7,6 @@ import com.musala.assessment.drone.model.Medication;
 import com.musala.assessment.drone.repository.DroneRepository;
 import com.musala.assessment.drone.repository.MedicationRepository;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,12 +61,6 @@ public class GetMedicationItemControllerTest extends BaseIntegrationTest{
                 .name(RandomStringUtils.randomAlphabetic(10))
                 .weight(100.00)
                 .build());
-    }
-
-    @After
-    public void clearDatabase() {
-        medicationRepository.deleteAll();
-        droneRepository.deleteAll();
     }
 
     @Test
