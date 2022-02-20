@@ -219,24 +219,4 @@ public class LoadDroneControllerTest extends BaseIntegrationTest{
                 .andDo(print())
                 .andReturn();
     }
-
-    private void registerDroneInLoadedState() {
-        droneRepository.save(Drone.builder()
-                .serialNumber(SERIAL_NUMBER_WRONG_STATE)
-                .model(Model.LightWeight)
-                .batteryCapacity(BigDecimal.valueOf(100L))
-                .state(State.LOADED)
-                .weightLimit(500.00)
-                .build());
-    }
-
-    private void registerDroneWithbatteryLevelBelow25() {
-        droneRepository.save(Drone.builder()
-                .serialNumber(SERIAL_NUMBER_BATTERY_LEVEL)
-                .model(Model.LightWeight)
-                .batteryCapacity(BigDecimal.valueOf(24L))
-                .state(State.IDLE)
-                .weightLimit(500.00)
-                .build());
-    }
 }
